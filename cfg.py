@@ -2,8 +2,8 @@
 products = {
     'viirs': {
             'aod': {
+                'AERDB': ['D3', 'L2'], 
                 'AERDT': ['L2'],
-                'AERDB': ['L2'], 
              },
     },
     'h08': {
