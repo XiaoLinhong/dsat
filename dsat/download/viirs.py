@@ -1,4 +1,5 @@
 ''' viirs 卫星产品下载 '''
+import os
 
 import requests
 
