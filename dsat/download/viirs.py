@@ -33,20 +33,34 @@ def download(cfg, thisTime, prodocts):
     for key in prodocts: # 变量
         for algorithm in prodocts[key]:
             targets = get_targets(thisTime, cfg.rawName, algorithm)
-            for outName in targets:
-                download_one(outName=outName, **targets[outName])
-
+            for outName in targets: # 下载一个文件
+                for i in range(5):
+                   print('%s: %d th attempt' % (outName, (i+1)))
+                   flag = download_one(outName=outName, **targets[outName])
+                   if flag: break
+                if not flag: # 下载失败，删除破碎文件
+                   if os.path.exists(outName): os.remove(outName)
+                   
 def download_one(url, size, nowSize, outName):
     ''' 下载一个文件 '''
-    headers = {'Range': 'bytes=%d-' % size}
-    response = requests.get(url, timeout=10, stream=True, headers=headers)
+    headers = {'Authorization': 'Bearer 55F841D4-88FE-11EA-9FE6-AEB2F2747E3F'}
+    try: # url加载问题
+        response = requests.get(url, timeout=5, stream=True, headers=headers)
+    except:
+        print('Please check if %s is right' % url)
+        return False
     makedir(outName)
-    with open(outName, "ab") as fd:
-        for chunk in response.iter_content(chunk_size=1024):
-            if chunk:
-                nowSize += len(chunk)
-                fd.write(chunk)
-                fd.flush()
-                # meter(nowSize, size)
+    with open(outName, "wb") as fd:
+        try:
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk:
+                    # print(outName, size, nowSize)
+                    nowSize += len(chunk)
+                    fd.write(chunk)
+                    fd.flush()
+                   # meter(nowSize, size)
+        except:
+            return False
     if nowSize == size:
-        print('%s is complete!')
+        print('%s is complete!' % outName)
+        return True
