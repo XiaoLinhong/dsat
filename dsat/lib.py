@@ -21,3 +21,28 @@ def meter(nowSize, size):
     done = int(50 * nowSize / size)
     sys.stdout.write("\r[%s%s] %d%%" % ('█'*done, ' ' * (50-done), 100 * nowSize / size))
     sys.stdout.flush()
+
+def get_segmet(outName, size, iterator):
+    ''' 迭代下载过程 '''
+    makedir(outName)
+    nowSize = getsize(outName) # 当前文件大小
+    if nowSize == size: # 已经下载完成
+        return True
+    with open(outName, "wb") as fd:
+        try:
+            for chunk in iterator:
+                if chunk:
+                    # print(outName, size, nowSize)
+                    nowSize += len(chunk)
+                    fd.write(chunk)
+                    fd.flush()
+                    meter(nowSize, size)
+                else:
+                    break
+        except Exception as err:
+            print(err)
+            return False
+    if nowSize == size:
+        print('\n %s is complete! \n' % outName)
+        return True
+    return True

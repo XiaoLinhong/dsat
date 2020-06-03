@@ -6,16 +6,11 @@ products = {
                 'AERDT': ['L2'],
              },
     },
-    'sent': {
-        'Sentinel-5': ['L2__CLOUD_', 'L2__CO____', 'L2__HCHO__', 'L2__NO2___', 'L2__O3_TCL', 'L2__O3____', 'L2__SO2___', 'L2__O3__PR', 'L2__CH4'],
+    'sent': { # 'L2__CH4'
+        'Sentinel-5': ['L2__CLOUD_', 'L2__CO____', 'L2__HCHO__', 'L2__NO2___', 'L2__O3_TCL', 'L2__O3____', 'L2__SO2___', 'L2__O3__PR'],
     },
-    'h08': {
-            'aod':{
-               '021': ['L2'], 
-               '030': ['L2'],
-            },
-            'o3':{
-                '021': ['L2'], 
-            },
+    'h08': { # 小时和日均
+        'd1': dict(level='L3', varName='ARP', algorithm='030'), # 气溶胶
+        'd2': dict(level='L2', varName='ARP', algorithm='021'), # 气溶胶
     },
 }

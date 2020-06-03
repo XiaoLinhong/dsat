@@ -6,7 +6,7 @@ from datetime import timedelta
 import requests
 from requests import Session
 
-from ..lib import getsize, makedir, meter
+from ..lib import getsize, makedir, get_segmet
 
 LOGIN = 'https://s5phub.copernicus.eu/dhus////login' # 登录表单地址
 QUARRY = 'https://s5phub.copernicus.eu/dhus/api/stub/products' # 产品查询地址
@@ -39,7 +39,6 @@ def download(cfg, thisTime, prodocts):
                     if flag: break
                 if not flag and os.path.exists(outName): # 下载失败，删除破碎文件
                     os.remove(outName)
-                exit()
 
 def get_product_lists(version, varName, thisTime, params=PARAMS):
     ''' 获取哨兵卫星当日的产品 '''
@@ -67,25 +66,10 @@ def download_one_product(uuid, outName):
     with Session() as session:
         session.post(LOGIN, data=FORM)
         try: # url加载问题
-            response = session.get(url, stream=True, verify=False)
+            response = session.get(url, stream=True, verify=False, timeout=5)
         except:
             print('Please check if %s is right' % url)
             return False
-        makedir(outName)
-        nowSize = getsize(outName) # 单前文件大小
         size = int(response.headers['Content-Length']) # 文件大小
-        if nowSize == size:
-            return True
-        with open(outName, "wb") as fd:
-            try:
-                for chunk in response.iter_content(chunk_size=1024):
-                    if chunk:
-                        # print(outName, size, nowSize)
-                        nowSize += len(chunk)
-                        fd.write(chunk)
-                        fd.flush()
-            except:
-                return False
-        if nowSize == size:
-            print('%s is complete!' % outName)
-            return True
+        iterator = response.iter_content(chunk_size=1024)
+        return get_segmet(outName, size, iterator)
