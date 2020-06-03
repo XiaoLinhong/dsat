@@ -6,7 +6,9 @@ products = {
                 'AERDT': ['L2'],
              },
     },
-    'sent': {},
+    'sent': {
+        'Sentinel-5': ['L2__CLOUD_', 'L2__CO____', 'L2__HCHO__', 'L2__NO2___', 'L2__O3_TCL', 'L2__O3____', 'L2__SO2___', 'L2__O3__PR', 'L2__CH4'],
+    },
     'h08': {
             'aod':{
                '021': ['L2'], 
