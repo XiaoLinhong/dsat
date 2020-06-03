@@ -45,7 +45,7 @@ def download(cfg, thisTime, prodocts):
             for remoteName in fileNames:
                 outName = cfg.rawName.format(file=os.path.basename(remoteName), **kargs)
                 for i in range(5):
-                    print('%s: %d th attempt' % (outName, (i+1)))
+                    print('%s: %d th attempt' % (os.path.basename(outName), (i+1)))
                     flag = download_one_product(remoteName, outName)
                     if flag: 
                         break

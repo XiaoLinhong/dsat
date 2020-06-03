@@ -19,7 +19,8 @@ def getsize(fileName):
 def meter(nowSize, size):
     ''' 显示进度条 '''
     done = int(50 * nowSize / size)
-    sys.stdout.write("\r[%s%s] %d%%" % ('█'*done, ' ' * (50-done), 100 * nowSize / size))
+    sys.stdout.write("\r[%s%s] %d%%" % ('\033[42m \033[0m'*done, ' ' * (50-done), 100 * nowSize / size))
+    #sys.stdout.write("\r[%s%s] %d%%" % ('█'*done, ' ' * (50-done), 100 * nowSize / size))
     sys.stdout.flush()
 
 def get_segmet(outName, size, iterator):
@@ -32,7 +33,6 @@ def get_segmet(outName, size, iterator):
         try:
             for chunk in iterator:
                 if chunk:
-                    # print(outName, size, nowSize)
                     nowSize += len(chunk)
                     fd.write(chunk)
                     fd.flush()
@@ -43,6 +43,6 @@ def get_segmet(outName, size, iterator):
             print(err)
             return False
     if nowSize == size:
-        print('\n %s is complete! \n' % outName)
+        print('\n %s is complete! \n' % os.path.dirname(outName))
         return True
     return True

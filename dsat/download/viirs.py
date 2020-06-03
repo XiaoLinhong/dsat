@@ -37,17 +37,17 @@ def download(cfg, thisTime, prodocts):
                 targets = get_targets(thisTime, cfg.rawName, algorithm, level)
                 for outName in targets: # 下载一个文件
                     for i in range(5):
-                        print('%s: %d th attempt' % (outName, (i+1)))
+                        print('%s: %d th attempt' % (os.path.basename(outName), (i+1)))
                         flag = download_one_product(outName=outName, **targets[outName])
                         if flag: break
-                    if not flag: # 下载失败，删除破碎文件
-                        if os.path.exists(outName): os.remove(outName)
+                        if not flag and os.path.exists(outName): # 下载失败，删除破碎文件
+                            os.remove(outName)
                    
 def download_one_product(url, size, nowSize, outName):
     ''' 下载一个文件 '''
     headers = {'Authorization': 'Bearer 55F841D4-88FE-11EA-9FE6-AEB2F2747E3F'}
     try: # url加载问题
-        response = requests.get(url, timeout=5, stream=True, headers=headers)
+        response = requests.get(url, timeout=10, stream=True, headers=headers)
     except:
         print('Please check if %s is right' % url)
         return False

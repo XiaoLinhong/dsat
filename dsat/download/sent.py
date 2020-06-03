@@ -34,11 +34,11 @@ def download(cfg, thisTime, prodocts):
             for item in productLists:
                 outName = cfg.rawName.format(level=cols[0], name=cols[2], file=item['identifier']+'.nc', **kargs)
                 for i in range(5):
-                    print('%s: %d th attempt' % (outName, (i+1)))
+                    print('%s: %d th attempt' % (os.path.basename(outName), (i+1)))
                     flag = download_one_product(item['uuid'], outName)
                     if flag: break
-                if not flag and os.path.exists(outName): # 下载失败，删除破碎文件
-                    os.remove(outName)
+                    if not flag and os.path.exists(outName): # 下载失败，删除破碎文件
+                        os.remove(outName)
 
 def get_product_lists(version, varName, thisTime, params=PARAMS):
     ''' 获取哨兵卫星当日的产品 '''
@@ -66,7 +66,7 @@ def download_one_product(uuid, outName):
     with Session() as session:
         session.post(LOGIN, data=FORM)
         try: # url加载问题
-            response = session.get(url, stream=True, verify=False, timeout=5)
+            response = session.get(url, stream=True, verify=False, timeout=10)
         except:
             print('Please check if %s is right' % url)
             return False
