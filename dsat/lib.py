@@ -29,6 +29,10 @@ def get_segmet(outName, size, iterator):
     nowSize = getsize(outName) # 当前文件大小
     if nowSize == size: # 已经下载完成
         return True
+    
+    if nowSize != size and nowSize > 0:
+        os.remove(outName)       
+
     with open(outName, "wb") as fd:
         try:
             for chunk in iterator:
