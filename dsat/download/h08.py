@@ -1,4 +1,6 @@
 import os
+import sys
+
 from ftplib import FTP
 
 from ..lib import getsize, makedir, get_segmet
@@ -22,8 +24,13 @@ PATH = dict(
 def get_ftp(username, password, host=HOST, port=21):
     ''' 获取ftp链接 '''
     ftp = FTP()
-    ftp.connect(host, port)
-    ftp.login(username, password)
+    try:
+        ftp.connect(host, port)
+        ftp.login(username, password)
+    except Exception as err:
+        print("FTP登陆失败，请检查主机号、用户名、密码是否正确", err)
+        sys.exit(1)
+
     ftp.voidcmd('TYPE I')
     return ftp
 
