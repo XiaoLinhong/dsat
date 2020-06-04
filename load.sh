@@ -1,7 +1,7 @@
 set -e # stop the shell on first error
 
 #多天循环下载
-BegTime=$(date -d"2019-01-01" '+%s')
+BegTime=$(date -d"2019-12-01" '+%s')
 EndTime=$(date -d"2019-12-31" '+%s')
 
 # 执行下载循环

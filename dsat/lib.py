@@ -32,6 +32,7 @@ def get_segmet(outName, size, iterator):
     
     if nowSize != size and nowSize > 0:
         os.remove(outName)       
+        nowSize = 0
 
     with open(outName, "wb") as fd:
         try:

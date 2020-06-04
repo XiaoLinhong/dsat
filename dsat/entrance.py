@@ -11,3 +11,6 @@ def main():
 
     # 下载卫星数据
     getattr(download, cfg.satellite).download(cfg, cfg.thisTime, cfg.products[cfg.satellite])
+
+    # 处理数据
+   

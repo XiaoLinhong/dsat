@@ -5,6 +5,8 @@ from datetime import timedelta
 
 import requests
 from requests import Session
+from requests.auth import HTTPBasicAuth
+
 
 from ..lib import getsize, makedir, get_segmet
 
@@ -23,6 +25,10 @@ PARAMS = {
 FORM = {"login_username": 's5pguest',
         "login_password": 's5pguest',
 }
+login = 's5pguest'
+password = 's5pguest'
+headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
 def download(cfg, thisTime, prodocts):
     ''' 下载所有产品 '''
@@ -47,7 +53,7 @@ def get_product_lists(version, varName, thisTime, params=PARAMS):
 
     params['filter'] = params['filter'].format(begTime=begTime, endTime=endTime, varName=varName, version=version)
     with Session() as session:
-        session.post(LOGIN, data=FORM)
+        session.post(LOGIN, data=FORM, auth=HTTPBasicAuth(login, password), headers=headers)
         response = session.get(QUARRY, params=params)
         content = response.json()
         products = []
@@ -64,9 +70,9 @@ def download_one_product(uuid, outName):
     url = URL.format(uuid=uuid)
 
     with Session() as session:
-        session.post(LOGIN, data=FORM)
+        session.post(LOGIN, data=FORM, auth=HTTPBasicAuth(login, password), headers=headers)
         try: # url加载问题
-            response = session.get(url, stream=True, verify=False, timeout=10)
+            response = session.get(url, stream=True, verify=False)
         except:
             print('Please check if %s is right' % url)
             return False
