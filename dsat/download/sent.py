@@ -32,6 +32,7 @@ headers = {
 
 def download(cfg, thisTime, prodocts):
     ''' 下载所有产品 '''
+    yesno = True
     kargs = dict(satellite='sent', time=thisTime.strftime('%Y%m%d'))
     for version in prodocts: # 目前只支持哨兵5
         for varName in prodocts[version]: # 不同变量产品
@@ -45,6 +46,9 @@ def download(cfg, thisTime, prodocts):
                     if flag: break
                     if not flag and os.path.exists(outName): # 下载失败，删除破碎文件
                         os.remove(outName)
+                if i == 4 and not flag:
+                    yesno = False       
+    return yesno
 
 def get_product_lists(version, varName, thisTime, params=PARAMS):
     ''' 获取哨兵卫星当日的产品 '''

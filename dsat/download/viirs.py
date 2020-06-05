@@ -31,6 +31,7 @@ def get_targets(thisTime, outName, algorithm='AERDT', level='L2'):
 
 def download(cfg, thisTime, prodocts):
     ''' 下载 '''
+    yesno = True
     for key in prodocts: # 变量
         for algorithm in prodocts[key]: # 算法
             for level in prodocts[key][algorithm]: # 产品级别
@@ -42,7 +43,9 @@ def download(cfg, thisTime, prodocts):
                         if flag: break
                         if not flag and os.path.exists(outName): # 下载失败，删除破碎文件
                             os.remove(outName)
-                   
+                    if i == 4 and not flag:
+                        yesno = False
+    return yesno
 def download_one_product(url, size, nowSize, outName):
     ''' 下载一个文件 '''
     headers = {'Authorization': 'Bearer 55F841D4-88FE-11EA-9FE6-AEB2F2747E3F'}

@@ -43,6 +43,7 @@ def get_ftp_fileName(item, path, thisTime):
 
 def download(cfg, thisTime, prodocts):
     ''' 下载所有产品 '''
+    yesno = True
     kargs = dict(satellite='h08', time=thisTime.strftime('%Y%m%d'))
     for key in prodocts: # 产品条目
         item = prodocts[key]
@@ -58,7 +59,9 @@ def download(cfg, thisTime, prodocts):
                         break
                     else:
                         if os.path.exists(outName): os.remove(outName) # 下载失败，删除破碎文件
-
+                if i == 4 and not flag:
+                    yesno = False
+    return yesno           
 def download_one_product(remoteName, outName):
     ''' 下载一个文件 '''
     ftp = get_ftp(**FORM)
