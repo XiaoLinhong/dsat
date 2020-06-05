@@ -13,13 +13,10 @@ def main():
 
     # 下载卫星数据
     #print(cfg.thisTime)
-    #for i in range(20):
-    flag = getattr(download, cfg.satellite).download(cfg, cfg.thisTime, cfg.products[cfg.satellite])
-    #if flag: break
-    while not flag:
-           print('Resubmit the download task')
-           flag = getattr(download, cfg.satellite).download(cfg, cfg.thisTime, cfg.products[cfg.satellite])
-       
+    for i in range(20):
+        flag = getattr(download, cfg.satellite).download(cfg, cfg.thisTime, cfg.products[cfg.satellite])
+        if flag:break 
+        print('Resubmit the download task')
 
     # 处理数据
     # getattr(handler, cfg.satellite).handler(cfg, cfg.thisTime, cfg.products[cfg.satellite]) 
