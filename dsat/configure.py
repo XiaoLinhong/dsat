@@ -52,4 +52,5 @@ def load_cfg():
                                    # 卫星      产品级别 产品名称 时间
     cfg.rawName = HOME + '/data/raw/{satellite}/{level}/{name}/{time}/{file}'.replace('/', os.sep)
     cfg.outName = HOME + '/data/out/{varName}/{freq}/{time}/{satellite}_{level}_{YMDH}.nc'.replace('/', os.sep)
+    cfg.done = HOME + '/data/log/{satellite}_{time}_done'.format(satellite=satellite, time=thisTime.strftime('%Y-%m-%d'))
     return cfg

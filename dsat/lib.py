@@ -2,6 +2,12 @@
 import os
 import sys
 
+def touch(fileName):
+    ''' 写一个空文件 '''
+    makedir(fileName)
+    with open(fileName, 'w') as fh:
+        pass
+
 def makedir(fileName):
     ''' 为文件 创建文件夹 '''
     path = os.path.dirname(fileName)
@@ -43,11 +49,24 @@ def get_segmet(outName, size, iterator):
                     fd.flush()
                     meter(nowSize, size)
                 else:
-                    break
+                    if nowSize == size:
+                        break
         except Exception as err:
             print(err)
             return False
     if nowSize == size:
         print('\n %s is complete! \n' % os.path.dirname(outName))
         return True
-    return True
+    return False
+
+#def read_latlon(data_path,fileName):
+    ###读取数据经纬度最值,并输出NC文件
+#      datas = xr.open_dataset(data_path+fileName)
+#      lat_min=datas.attrs['geospatial_lat_min']
+#      lat_max=datas.attrs['geospatial_lat_max']  #:                -34.319878
+#      lon_min=datas.attrs['geospatial_lon_min']
+#      lon_max=datas.attrs['geospatial_lon_max']#:                -122.94144
+#      if (lat_min>0 and lat_min<55) or (lat_max>0 and lat_max<55) or (lon_min>72 and lon_min<136) or (lon_max>72 and lon_max<136):
+#         return True
+      #else:
+         

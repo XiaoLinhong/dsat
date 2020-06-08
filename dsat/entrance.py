@@ -6,6 +6,8 @@ from . import download
 
 from . import handler
 
+from .lib import touch
+
 def main():
     ''' 主程序 '''
     # 加载配置
@@ -15,7 +17,9 @@ def main():
     #print(cfg.thisTime)
     for i in range(20):
         flag = getattr(download, cfg.satellite).download(cfg, cfg.thisTime, cfg.products[cfg.satellite])
-        if flag:break 
+        if flag: # 成功下载
+            touch(cfg.done)
+            break 
         print('Resubmit the download task')
 
     # 处理数据
