@@ -49,12 +49,12 @@ def download(cfg, thisTime, prodocts):
                 if i == 4 and not flag:
                     yesno = False       
     return yesno
-
-def get_product_lists(version, varName, thisTime, params=PARAMS):
+def get_product_lists(version, varName, thisTime):
     ''' 获取哨兵卫星当日的产品 '''
+    import copy
+    params = copy.deepcopy(PARAMS)
     begTime = thisTime.strftime('%Y-%m-%dT00:00:00.000Z')
     endTime = (thisTime + timedelta(days=1)).strftime('%Y-%m-%dT00:00:00.000Z')
-
     params['filter'] = params['filter'].format(begTime=begTime, endTime=endTime, varName=varName, version=version)
     with Session() as session:
         session.post(LOGIN, data=FORM, auth=HTTPBasicAuth(login, password), headers=headers)
