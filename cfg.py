@@ -6,7 +6,7 @@ products = {
                 'AERDT': ['L2'],
              },
     },
-    'sent': { # 'L2__CH4','L2__O3_TCL''L2__O3__PR'
+    'sent': { # 'L2__CH4','L2__O3_TCL''L2__O3__PR''L2__O3____'
         'Sentinel-5': ['L2__O3____','L2__CLOUD_', 'L2__CO____', 'L2__HCHO__', 'L2__NO2___',  'L2__SO2___'],
     },
     'h08': { # 每小时和每20分钟
