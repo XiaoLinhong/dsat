@@ -39,7 +39,12 @@ def get_ftp_fileName(item, path, thisTime):
     ftp = get_ftp(**FORM)
     thisPath = thisTime.strftime(path).format(**item)
     fileNames = ftp.nlst(thisPath)
-    return fileNames
+    if fileNames[0].endswith('nc'): # level 3
+        return fileNames
+    files = [] # level 2
+    for path in fileNames:
+        files += ftp.nlst(path)
+    return files
 
 def download(cfg, thisTime, prodocts):
     ''' 下载所有产品 '''
