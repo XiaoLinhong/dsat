@@ -15,14 +15,15 @@ def main():
 
     # 下载卫星数据
     #print(cfg.thisTime)
-    for i in range(20):
-        flag = getattr(download, cfg.satellite).download(cfg, cfg.thisTime, cfg.products[cfg.satellite])
-        if flag: # 成功下载
-            touch(cfg.done)
-            break 
-        else:
-            print('download time:', i)
-            print('Resubmit the download task')
-
+    if not os.path.exists(cfg.done): 
+       for i in range(20):
+           flag = getattr(download, cfg.satellite).download(cfg, cfg.thisTime, cfg.products[cfg.satellite])
+           if flag: # 成功下载
+               touch(cfg.done)
+               break 
+           else:
+               print('download time:', i)
+               print('Resubmit the download task')
+    else:
     # 处理数据
-    # getattr(handler, cfg.satellite).handler(cfg, cfg.thisTime, cfg.products[cfg.satellite]) 
+       getattr(handler, cfg.satellite).handler(cfg, cfg.thisTime, cfg.products[cfg.satellite]) 
