@@ -53,4 +53,6 @@ def load_cfg():
     cfg.rawName = HOME + '/data/raw/{satellite}/{level}/{name}/{time}/{file}'.replace('/', os.sep)
     cfg.outName = HOME + '/data/out/{varName}/{freq}/{time}/{satellite}_{level}_{YMDH}.nc'.replace('/', os.sep)
     cfg.done = HOME + '/data/log/{satellite}_{time}_done'.format(satellite=satellite, time=thisTime.strftime('%Y-%m-%d'))
+    cfg.rawPath = HOME + '/data/raw/{satellite}/{level}/{name}/{time}'.replace('/', os.sep)
+    cfg.outPath =  HOME + '/data/out/{name}/{freq}/{time}'.replace('/', os.sep)
     return cfg
