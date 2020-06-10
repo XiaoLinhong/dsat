@@ -21,7 +21,7 @@ def main():
             touch(cfg.done)
             break 
         else:
-            print('download time:'+i)
+            print('download time:', i)
             print('Resubmit the download task')
 
     # 处理数据
