@@ -27,7 +27,7 @@ def handler(cfg, thisTime, prodocts):
                         ofile = outPath + os.sep  + get_newname(file)
                         if get_latlon(ifile) and not os.path.exists(ofile):
                             read_nc(ifile, ofile, level)
-
+                print('ok')
 
 def read_nc(ifile, ofile, varName):
        makedir(ofile)

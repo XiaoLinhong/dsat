@@ -19,7 +19,7 @@ def handler(cfg, thisTime, prodocts):
     inputTime=thisTime.strftime('%Y%m%d')
     for varName in prodocts['Sentinel-5']: # 不同变量产品
         cols = varName.split('_') # 解析产品级别和变量名 'L2__O3____'
-        inputPath = cfg.rawPath.format(level=cols[0], name=cols[2], time=inputtime,**kargs)
+        inputPath = cfg.rawPath.format(level=cols[0], name=cols[2], time=inputTime,**kargs)
      #   outPath = cfg.outPath.format(name=cols[2], freq='hourly', **kargs)
         files = os.listdir(inputPath)
         for file in files:
@@ -29,8 +29,9 @@ def handler(cfg, thisTime, prodocts):
                 ifile = inputPath + os.sep  + file
                 ofile = outPath + os.sep  + get_newname(file)
                 if get_latlon(ifile) and not os.path.exists(ofile):
+                    import pdb;pdb.set_trace()
                     read_nc(ifile, ofile, varName)
-                                    
+                    print('ok') 
 def read_nc(ifile, ofile, varName):
       ''' 读入原始文件需要的变量，重新输出 '''
       fh = Dataset(ifile, mode='r')
