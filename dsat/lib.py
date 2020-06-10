@@ -1,7 +1,7 @@
 ''' 通用函数 '''
 import os
 import sys
-
+import xarray as xr
 def touch(fileName):
     ''' 写一个空文件 '''
     makedir(fileName)
@@ -59,14 +59,13 @@ def get_segmet(outName, size, iterator):
         return True
     return False
 
-#def read_latlon(data_path,fileName):
+def get_latlon(position):
     ###读取数据经纬度最值,并输出NC文件
-#      datas = xr.open_dataset(data_path+fileName)
-#      lat_min=datas.attrs['geospatial_lat_min']
-#      lat_max=datas.attrs['geospatial_lat_max']  #:                -34.319878
-#      lon_min=datas.attrs['geospatial_lon_min']
-#      lon_max=datas.attrs['geospatial_lon_max']#:                -122.94144
-#      if (lat_min>0 and lat_min<55) or (lat_max>0 and lat_max<55) or (lon_min>72 and lon_min<136) or (lon_max>72 and lon_max<136):
-#         return True
-      #else:
-         
+    datas = xr.open_dataset(position)
+    lat_min=datas.attrs['geospatial_lat_min']
+    lat_max=datas.attrs['geospatial_lat_max']
+    lon_min=datas.attrs['geospatial_lon_min']
+    lon_max=datas.attrs['geospatial_lon_max']
+    if (lat_min>0 and lat_min<55) or (lat_max>0 and lat_max<55) or (lon_min>72 and lon_min<136) or (lon_max>72 and lon_max<136):
+       return True
+
