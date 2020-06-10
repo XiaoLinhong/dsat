@@ -38,7 +38,10 @@ def get_ftp_fileName(item, path, thisTime):
     ''' 获取当前时间所有文件名'''
     ftp = get_ftp(**FORM)
     thisPath = thisTime.strftime(path).format(**item)
-    fileNames = ftp.nlst(thisPath)
+    try:
+        fileNames = ftp.nlst(thisPath)
+    except Exception as err:
+        print(err)
     if fileNames[0].endswith('nc'): # level 3
         return fileNames
     files = [] # level 2
@@ -54,6 +57,7 @@ def download(cfg, thisTime, prodocts):
         item = prodocts[key]
         kargs['level'], kargs['name'] = item['level'], item['varName']
         for freq in PATH:
+            if item['level'] == 'L2' and freq == 'daily': continue
             fileNames = get_ftp_fileName(item, PATH[freq], thisTime) # 获取所有远程文件路径
             for remoteName in fileNames:
                 outName = cfg.rawName.format(file=os.path.basename(remoteName), **kargs)
