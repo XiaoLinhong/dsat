@@ -1,4 +1,5 @@
 ''' 评估程序主模块 '''
+import os
 
 from .configure import load_cfg
 
@@ -24,6 +25,6 @@ def main():
            else:
                print('download time:', i)
                print('Resubmit the download task')
-    else:
+    if os.path.exists(cfg.done):
     # 处理数据
        getattr(handler, cfg.satellite).handler(cfg, cfg.thisTime, cfg.products[cfg.satellite]) 
