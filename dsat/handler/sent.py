@@ -25,7 +25,7 @@ def handler(cfg, thisTime, prodocts):
         for file in files:
             if file.endswith('.nc'):  
                 outTime = file[20:28]
-                outPath = cfg.outPath.format(name=cols[2], freq='hourly',time=outTime, **kargs)
+                outPath = cfg.outPath.format(name=cols[2], freq='minutly',time=outTime, **kargs)
                 ifile = inputPath + os.sep  + file
                 ofile = outPath + os.sep  + get_newname(file)
                 if get_latlon(ifile) and not os.path.exists(ofile):
