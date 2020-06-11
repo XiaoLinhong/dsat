@@ -18,17 +18,17 @@ def handler(cfg, thisTime, prodocts):
     
     for key in prodocts: # 产品条目
         item = prodocts[key]
-        kargs['level'], kargs['name'] = item['level'], item['varName']
-        inputPath = cfg.rawPath.format(**kargs)    
+        kargs['level'] = item['level']
+        inputPath = cfg.rawPath.format(name=item['varName'],**kargs)    
         files     = os.listdir(inputPath)
         
         for file in files:
              if file.endswith('.nc'):                 
                 if kargs['level'] == 'L3':
                     file_freq=file[18:20]
-                    outPath   = cfg.outPath.format(freq=FREQ[file_freq],**kargs)
+                    outPath   = cfg.outPath.format(name='A0D',freq=FREQ[file_freq],**kargs)
                 if kargs['level'] == 'L2':
-                    outPath   = cfg.outPath.format(freq='minutly',**kargs)
+                    outPath   = cfg.outPath.format(name='A0D',freq='minutly',**kargs)
                 ifile = inputPath + os.sep  + file
                 ofile = outPath + os.sep  + get_newname(file,kargs['level'])
                 print(ifile)                
