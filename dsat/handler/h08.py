@@ -9,8 +9,11 @@ import xarray as xr
 
 from ..lib import  makedir
 
-NAME = {'L3':'AOT_L2_Mean', 'L2':'AOT',}
+NAME = {'L3':'AOT_L2_Mean', 'L2':'AOT',}  #读取变量名，没写完
 FREQ = {'1D':'daily','1H':'hourly',} #L3
+outPathNAME={'ARP':'A0D','CLP':'CLOUD','WLF':'FIRE'}
+
+
 def handler(cfg, thisTime, prodocts):
     ''' 下载所有产品 '''
     kargs = dict(satellite='h08', time=thisTime.strftime('%Y%m%d'))
@@ -26,9 +29,9 @@ def handler(cfg, thisTime, prodocts):
              if file.endswith('.nc'):                 
                 if kargs['level'] == 'L3':
                     file_freq=file[18:20]
-                    outPath   = cfg.outPath.format(name='A0D',freq=FREQ[file_freq],**kargs)
+                    outPath   = cfg.outPath.format(name=outPathNAM[item['varName']],freq=FREQ[file_freq],**kargs)
                 if kargs['level'] == 'L2':
-                    outPath   = cfg.outPath.format(name='A0D',freq='minutly',**kargs)
+                    outPath   = cfg.outPath.format(name=outPathNAM[item['varName']],freq='minutly',**kargs)
                 ifile = inputPath + os.sep  + file
                 ofile = outPath + os.sep  + get_newname(file,kargs['level'])
                 print(ifile)                
